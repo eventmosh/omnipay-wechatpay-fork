@@ -38,9 +38,9 @@ class CreateOrderRequest extends BaseAbstractRequest
 
         $tradeType = strtoupper($this->getTradeType());
 
-        if ($tradeType == 'JSAPI') {
-            $this->validate('open_id');
-        }
+//        if ($tradeType == 'JSAPI') {
+//            $this->validate('open_id');
+//        }
 
         $data = array(
             'appid'            => $this->getAppId(),//*
@@ -62,6 +62,7 @@ class CreateOrderRequest extends BaseAbstractRequest
             'trade_type'       => $this->getTradeType(), //*
             'limit_pay'        => $this->getLimitPay(),
             'openid'           => $this->getOpenId(),//*(trade_type=JSAPI)
+            'sub_openid'       => $this->getSubOpenId(),
             'nonce_str'        => md5(uniqid()),//*
         );
 
@@ -207,6 +208,21 @@ class CreateOrderRequest extends BaseAbstractRequest
         return $this->getParameter('open_id');
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSubOpenId()
+    {
+        return $this->getParameter('sub_open_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function setSubOpenId($subOpenId)
+    {
+        return $this->setParameter('sub_open_id', $subOpenId);
+    }
 
     /**
      * @param mixed $deviceInfo
@@ -356,3 +372,4 @@ class CreateOrderRequest extends BaseAbstractRequest
         return $this->response = new CreateOrderResponse($this, $responseData);
     }
 }
+

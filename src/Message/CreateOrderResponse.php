@@ -54,9 +54,10 @@ class CreateOrderResponse extends BaseAbstractResponse
 
     public function getJsOrderData()
     {
-        if ($this->isSuccessful()) {
+	if ($this->isSuccessful()) {
+            $subAppId = $this->request->getSubAppId();
             $data = [
-                'appId'     => $this->request->getAppId(),
+                'appId'     => !empty($subAppId) ? $subAppId : $this->request->getAppId(),
                 'package'   => 'prepay_id=' . $this->getPrepayId(),
                 'nonceStr'  => md5(uniqid()),
                 'timeStamp' => time() . '',
@@ -67,7 +68,6 @@ class CreateOrderResponse extends BaseAbstractResponse
         } else {
             $data = null;
         }
-
         return $data;
     }
 
